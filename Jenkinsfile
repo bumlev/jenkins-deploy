@@ -17,6 +17,11 @@ pipeline {
                 }
 
             }
+            post{
+                always {
+                    archiveArtifacts artifacts:'**/target/*.jar'
+                }
+            }
         }
         stage('Test') {
             steps {
@@ -24,16 +29,13 @@ pipeline {
                     sh 'mvn test'
                 }
             }
-        }
-
-        stage('Capture') {
-            steps {
-                echo 'Capturing artifacts and logs...'
-                // Capture artifacts or logs
-                archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
-                junit 'target/test-results/*.xml'
+            post{
+                always {
+                    junit '**/target/surefire-reports/*.xml'
+                }
             }
         }
+
     }
 
 
