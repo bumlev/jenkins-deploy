@@ -10,7 +10,8 @@ pipeline {
         }
         stage('Test') {
             steps {
-                echo 'Testing...'
+                bat 'mvn test'
+                junit '**/target/surefire-reports/*.xml'
             }
         }
         stage('Deploy') {
