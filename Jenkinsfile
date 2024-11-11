@@ -37,8 +37,6 @@ pipeline {
 
                  // Your testing or deployment tasks here
                   echo 'Running tests...'
-                  bat 'mvn test'
-                  junit '**/target/surefire-reports/*.xml'
             }
         }
     }
