@@ -26,12 +26,6 @@ pipeline {
             }
         }
         stage('Deploy') {
-
-            when{
-                 expression {
-                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
-                    }
-            }
             steps {
                 echo 'Deploying APP_NAME....'
                 bat 'java -jar target/jenkins-deploy-0.0.1-SNAPSHOT.jar'
