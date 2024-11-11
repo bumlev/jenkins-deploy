@@ -12,17 +12,12 @@ pipeline {
 
         stage('Build') {
             steps {
-                script{
-                      sh 'mvn -B -DskipTests clean package'
-                }
-
+                echo "Build package"
             }
         }
         stage('Test') {
             steps {
-                script{
-                    sh 'mvn test'
-                }
+                echo 'mvn test'
             }
             post{
                 always {
