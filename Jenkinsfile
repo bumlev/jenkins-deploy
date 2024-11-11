@@ -21,12 +21,11 @@ pipeline {
             }
         }
 
-        stage('Capture') {
+         stage('Build Docker Image') {
                     steps {
-                        echo 'Capturing artifacts and logs...'
-                        // Capture artifacts or logs
-                        archiveArtifacts artifacts: 'target/*.jar', allowEmptyArchive: true
-                        junit 'target/surefire-reports/*.xml'
+                        script {
+                            sh 'docker build -t jenkins-deploy-jenkins-deploy:latest .'
+                        }
                     }
         }
     }
