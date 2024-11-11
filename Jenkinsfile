@@ -25,8 +25,8 @@ pipeline {
                 echo 'Deploying....'
 
               // Restart the application if it's already running
-                bat '''
-                if pgrep -f ${APP_NAME}; then
+                bat ''
+                if prep -f ${APP_NAME}; then
                     pkill -f ${APP_NAME}
             }
         }
