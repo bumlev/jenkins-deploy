@@ -28,22 +28,17 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying APP_NAME....'
-                // Start the application in the background
-                sh 'java -jar target/jenkins-deploy-0.0.1-SNAPSHOT.jar'
+                // Start application with trap to ensure cleanup
+                bat ''
 
-                // Give the app some time to start
+                trap "kill $(jps | grep jenkins-deploy-0.0.1-SNAPSHOT | awk \'{print \$1}\')" EXIT
+                java -jar target/jenkins-deploy-0.0.1-SNAPSHOT.jar &
                 sleep 10
 
-                // Run your tests or other deployment tasks here
-                echo 'Running tests...'
-
-                // Stop the application
-                script {
-                    def pid = bat(script: "jps | grep jenkins-deploy-0.0.1-SNAPSHOT | awk '{print \$1}'", returnStdout: true).trim()
-                    if (pid) {
-                        bat "kill -9 ${pid}"
-                    }
-                }
+                 // Your testing or deployment tasks here
+                  echo 'Running tests...'
+                  bat 'mvn test'
+                  junit '**/target/surefire-reports/*.xml'
             }
         }
     }
