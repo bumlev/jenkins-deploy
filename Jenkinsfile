@@ -17,6 +17,11 @@ pipeline {
                 }
 
             }
+            post{
+                always {
+                    junit '**/target/*.jar'
+                }
+            }
         }
         stage('Test') {
             steps {
