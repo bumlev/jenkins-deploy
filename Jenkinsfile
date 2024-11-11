@@ -29,7 +29,7 @@ pipeline {
             steps {
                 echo 'Deploying APP_NAME....'
                 // Start the application in the background
-                sh 'nohup java -jar target/jenkins-deploy-0.0.1-SNAPSHOT.jar &'
+                sh 'java -jar target/jenkins-deploy-0.0.1-SNAPSHOT.jar'
 
                 // Give the app some time to start
                 sleep 10
