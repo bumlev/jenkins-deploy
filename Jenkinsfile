@@ -1,11 +1,11 @@
 pipeline {
-    agent none
+    agent any
     stages {
 
          stage('Checkout') {
             steps {
                 script {
-                    checkout scm
+                    git branch: 'main', url: 'https://github.com/bumlev/jenkins-deploy.git'
                 }
             }
         }
@@ -13,9 +13,21 @@ pipeline {
         stage('Build') {
             steps {
                 script{
-                    sh 'mvn -B -DskipTests clean package'
+                      sh 'mvn -B -DskipTests clean package'
                 }
 
+            }
+        }
+        stage('Test') {
+            steps {
+                script{
+                    sh 'mvn test'
+                }
+            }
+            post{
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
             }
         }
     }
