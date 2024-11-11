@@ -19,7 +19,7 @@ pipeline {
             }
             post{
                 always {
-                    junit '**/target/*.jar'
+                    archiveArtifacts artifacts:'**/target/*.jar'
                 }
             }
         }
