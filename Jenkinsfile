@@ -1,5 +1,9 @@
 pipeline {
     agent any
+
+    environment {
+            MAVEN_HOME = 'C:\Users\LevyUbumwe\Downloads\apache-maven-3.9.8-bin\apache-maven-3.9.8'
+    }
     stages {
 
          stage('Checkout') {
@@ -13,7 +17,7 @@ pipeline {
         stage('Build') {
             steps {
                 script{
-                      sh 'mvn clean compile'
+                      sh '{MAVEN_HOME}/bin/mvn clean package'
                 }
 
             }
@@ -26,7 +30,7 @@ pipeline {
         stage('Test') {
             steps {
                 script{
-                    sh 'mvn test'
+                    sh '${MAVEN_HOME}/bin/mvn test'
                 }
             }
             post{
