@@ -15,7 +15,7 @@ COPY target/*.jar app.jar
 #COPY target/jenkins-deploy-0.0.1-SNAPSHOT.jar app.jar
 
 # 4. Expose a port to enable communication with the container
-EXPOSE 8080
+EXPOSE 8082
 
 # 5. Set an environment variable (optional)
 ENV JAVA_OPTS=""

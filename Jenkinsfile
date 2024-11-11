@@ -1,30 +1,43 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3.9.0'
-            args '-v /root/.m2:/root/.m2'
-        }
-    }
+    agent any
     stages {
+
+         stage('Checkout') {
+            steps {
+                script {
+                    git branch: 'main', url: 'https://github.com/bumlev/jenkins-deploy.git'
+                }
+            }
+        }
+
         stage('Build') {
             steps {
-                sh 'mvn -B -DskipTests clean package'
+                script{
+                    sh 'mvn -B -DskipTests clean package'
+                }
+
             }
         }
         stage('Test') {
             steps {
-                sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
+                script{
+                    sh 'mvn test'
                 }
             }
         }
-        stage('Deliver') {
-            steps {
-                sh './jenkins/scripts/deliver.sh'
+    }
+
+     post {
+            // Cleanup, notifications, or actions after the pipeline completes
+            always {
+                echo 'Pipeline completed!'
+                cleanWs()
+            }
+            success {
+                echo 'Pipeline succeeded!'
+            }
+            failure {
+                echo 'Pipeline failed.'
             }
         }
-    }
 }
