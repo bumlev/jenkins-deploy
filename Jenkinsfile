@@ -28,7 +28,22 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying APP_NAME....'
-                bat 'java -jar target/jenkins-deploy-0.0.1-SNAPSHOT.jar'
+                // Start the application in the background
+                sh 'nohup java -jar target/jenkins-deploy-0.0.1-SNAPSHOT.jar &'
+
+                // Give the app some time to start
+                sleep 10
+
+                // Run your tests or other deployment tasks here
+                echo 'Running tests...'
+
+                // Stop the application
+                script {
+                    def pid = bat(script: "jps | grep jenkins-deploy-0.0.1-SNAPSHOT | awk '{print \$1}'", returnStdout: true).trim()
+                    if (pid) {
+                        bat "kill -9 ${pid}"
+                    }
+                }
             }
         }
     }
