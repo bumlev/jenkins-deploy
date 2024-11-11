@@ -36,7 +36,6 @@ pipeline {
             // Cleanup, notifications, or actions after the pipeline completes
             always {
                 echo 'Pipeline completed!'
-                cleanWs()
             }
             success {
                 echo 'Pipeline succeeded!'
