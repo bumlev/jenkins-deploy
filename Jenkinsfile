@@ -14,19 +14,17 @@ pipeline {
             steps {
                 echo "Build package"
             }
+            post{
+                archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
+            }
         }
         stage('Test') {
             steps {
                 echo 'mvn test'
             }
-        }
-
-         stage('Build Docker Image') {
-                    steps {
-                        script {
-                            sh 'docker build -t jenkins-deploy-jenkins-deploy:latest .'
-                        }
-                    }
+            post{
+                junit '**/target/surefire-reports/*.xml', allowEmptyArchive: true
+            }
         }
     }
 
