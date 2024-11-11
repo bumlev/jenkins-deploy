@@ -5,7 +5,6 @@ pipeline {
          stage('Checkout') {
             steps {
                 script {
-                    git branch: 'main', url: 'https://github.com/bumlev/jenkins-deploy.git'
                     checkout scm
                 }
             }
