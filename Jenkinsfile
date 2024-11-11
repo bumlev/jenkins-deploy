@@ -25,8 +25,8 @@ pipeline {
                     steps {
                         echo 'Capturing artifacts and logs...'
                         // Capture artifacts or logs
-                        archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
-                        junit 'target/surefire-reports/*.xml'
+                        archiveArtifacts artifacts: '/target/*.jar', allowEmptyArchive: true
+                        junit '/target/surefire-reports/*.xml'
                     }
         }
     }
