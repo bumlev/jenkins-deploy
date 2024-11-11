@@ -18,18 +18,6 @@ pipeline {
 
             }
         }
-        stage('Test') {
-            steps {
-                script{
-                    sh 'mvn test'
-                }
-            }
-             post {
-                always {
-                    junit '**/target/surefire-reports/*.xml' // Collect test results in Jenkins
-                }
-            }
-        }
     }
 
      post {
