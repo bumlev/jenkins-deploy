@@ -28,15 +28,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying APP_NAME....'
-                // Start application with trap to ensure cleanup
-                bat ''
-
-                trap "kill $(jps | grep jenkins-deploy-0.0.1-SNAPSHOT | awk \'{print \$1}\')" EXIT
-                java -jar target/jenkins-deploy-0.0.1-SNAPSHOT.jar &
-                sleep 10
-
-                 // Your testing or deployment tasks here
-                  echo 'Running tests...'
+                bat 'java -jar target/*.jar'
             }
         }
     }
