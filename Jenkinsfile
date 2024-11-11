@@ -24,10 +24,15 @@ pipeline {
             steps {
                 echo 'Deploying....'
 
-              // Restart the application if it's already running
-                bat ''
-                if prep -f ${APP_NAME}; then
-                    pkill -f ${APP_NAME}
+               script {
+                          def pid = bat(script: "pgrep -f ${APP_NAME}.jar", returnStatus: true)
+                          if (pid == 0) {
+                              echo "Stopping running instance of ${APP_NAME}..."
+                              bat "pkill -f ${APP_NAME}.jar"
+                          } else {
+                              echo "${APP_NAME} is not running, no need to stop."
+                          }
+              }
             }
         }
     }
