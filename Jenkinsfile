@@ -12,18 +12,22 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo "Build package"
-            }
-            post{
-                archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
+                script{
+                      sh 'mvn -B -DskipTests clean package'
+                }
+
             }
         }
         stage('Test') {
             steps {
-                echo 'mvn test'
+                script{
+                    sh 'mvn test'
+                }
             }
             post{
-                junit '**/target/surefire-reports/*.xml', allowEmptyArchive: true
+                always {
+                    junit '**/target/surefire-reports/*.xml'
+                }
             }
         }
     }
