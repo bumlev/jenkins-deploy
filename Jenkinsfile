@@ -20,6 +20,11 @@ pipeline {
                 junit '**/target/surefire-reports/*.xml'
             }
         }
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker build -t jenkins-deploy-jenkins-deploy:latest .'
+            }
+        }
         stage('Deploy') {
 
             when{
