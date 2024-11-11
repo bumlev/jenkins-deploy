@@ -4,7 +4,7 @@ pipeline {
     environment {
             // Define any environment variables here if needed
             APP_NAME = 'jenkins-deploy'
-        }
+    }
 
 
     stages {
@@ -34,16 +34,7 @@ pipeline {
             }
             steps {
                 echo 'Deploying APP_NAME....'
-
-               script {
-                          def pid = bat(script: "pgrep -f ${APP_NAME}.jar", returnStatus: true)
-                          if (pid == 0) {
-                              echo "Stopping running instance of ${APP_NAME}..."
-                              bat "pkill -f ${APP_NAME}.jar"
-                          } else {
-                              echo "${APP_NAME} is not running, no need to stop."
-                          }
-              }
+                bat 'java -jar target/jenkins-deploy-0.0.1-SNAPSHOT.jar'
             }
         }
     }
