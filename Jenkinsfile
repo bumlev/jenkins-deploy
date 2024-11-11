@@ -28,7 +28,7 @@ pipeline {
                     }
             }
             steps {
-                echo 'Deploying....'
+                echo 'Deploying APP_NAME....'
 
                script {
                           def pid = bat(script: "pgrep -f ${APP_NAME}.jar", returnStatus: true)
